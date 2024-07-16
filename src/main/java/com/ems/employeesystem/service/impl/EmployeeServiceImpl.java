@@ -1,6 +1,7 @@
 package com.ems.employeesystem.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -37,6 +38,19 @@ public class EmployeeServiceImpl implements EmployeeService{
 
         return employeeRepository.findAll();
 
+    }
+
+    @Override
+    public Optional<Employee> getEmployee(Long id) {
+        
+        return employeeRepository.findById(id);
+    }
+
+    @Override
+    public void delete(Long id) {
+
+        employeeRepository.deleteById(id);
+        
     }
 
 }
