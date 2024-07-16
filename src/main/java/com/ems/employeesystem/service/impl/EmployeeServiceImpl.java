@@ -1,5 +1,7 @@
 package com.ems.employeesystem.service.impl;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.ems.employeesystem.dto.EmployeeDto;
@@ -30,6 +32,11 @@ public class EmployeeServiceImpl implements EmployeeService{
         return EmployeeMapper.mapToEmployeeDto(savedEmployee);
     }
 
-    
+    @Override
+    public List<Employee> getEmployees() {
+
+        return employeeRepository.findAll();
+
+    }
 
 }
