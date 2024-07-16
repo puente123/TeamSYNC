@@ -53,4 +53,11 @@ public class EmployeeServiceImpl implements EmployeeService{
         
     }
 
+    @Override
+    public EmployeeDto getEmployeeById(Long employeeId) {
+        // TODO Auto-generated method stub
+        Employee employee = employeeRepository.getReferenceById(employeeId);
+        return EmployeeMapper.mapToEmployeeDto(employee);
+    }
+
 }
