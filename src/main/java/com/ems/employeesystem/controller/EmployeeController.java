@@ -32,23 +32,7 @@ public class EmployeeController {
         EmployeeDto savedEmployee = employeeService.createEmployee(employeeDto);
         return new ResponseEntity<>(savedEmployee, HttpStatus.CREATED);
     }
-
-    /*@GetMapping
-    public List<Employee> all() {
-        return employeeService.getEmployees();
-    }*/
-
-   /*  @GetMapping("/{id}")
-    public Optional<Employee> one(@PathVariable Long id) {
-        return employeeService.getEmployee(id);
-    }*/
-
-    /*@DeleteMapping("/{id}")
-    void deleteEmployee(@PathVariable Long id) {
-        employeeService.delete(id);
-    }*/
-
-    
+ 
     /*
      *
      * Be careful when using GetMapping and PathVariable together
@@ -70,9 +54,9 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteEmployee(@PathVariable("id") Long employeeId){
+    public ResponseEntity<String> deleteEmployee(@PathVariable("id") Long employeeId){
         employeeService.deleteEmployeeById(employeeId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>("Employee Succesfully Deleted", HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
