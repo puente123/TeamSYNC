@@ -1,5 +1,6 @@
 package com.ems.employeesystem.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ems.employeesystem.dto.EmployeeDto;
 import com.ems.employeesystem.entity.Employee;
+import com.ems.employeesystem.exception.ResourceNotFoundException;
 import com.ems.employeesystem.mapper.EmployeeMapper;
 import com.ems.employeesystem.respository.EmployeeRepository;
 import com.ems.employeesystem.service.EmployeeService;
@@ -55,9 +57,37 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Override
     public EmployeeDto getEmployeeById(Long employeeId) {
-        // TODO Auto-generated method stub
-        Employee employee = employeeRepository.getReferenceById(employeeId);
+        
+        Employee employee = employeeRepository.findById(employeeId)
+                .orElseThrow(() -> new ResourceNotFoundException("Employee with this ID does NOT exist, ID: " + employeeId));
+
         return EmployeeMapper.mapToEmployeeDto(employee);
+    }
+
+    @Override
+    public void deleteEmployeeById(Long employeeId) {
+
+        boolean exists = employeeRepository.existsById(employeeId);
+
+        if(!exists){
+           throw new ResourceNotFoundException("Employee with this ID does NOT exist, ID: " + employeeId);
+        }
+
+        employeeRepository.deleteById(employeeId);
+                
+    }
+
+    @Override
+    public List<EmployeeDto> getAllEmployees() {
+
+        List<Employee> employees = employeeRepository.findAll();
+        List<EmployeeDto> dtoEmployees = new ArrayList<>();
+        for (Employee e : employees){
+            dtoEmployees.add(EmployeeMapper.mapToEmployeeDto(e));
+        }
+
+        return dtoEmployees;
+                
     }
 
 }

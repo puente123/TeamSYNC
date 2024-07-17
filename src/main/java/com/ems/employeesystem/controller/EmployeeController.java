@@ -1,8 +1,6 @@
 package com.ems.employeesystem.controller;
 
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -35,20 +33,46 @@ public class EmployeeController {
         return new ResponseEntity<>(savedEmployee, HttpStatus.CREATED);
     }
 
-    @GetMapping
+    /*@GetMapping
     public List<Employee> all() {
         return employeeService.getEmployees();
-    }
+    }*/
 
-    @GetMapping("/{id}")
+   /*  @GetMapping("/{id}")
     public Optional<Employee> one(@PathVariable Long id) {
         return employeeService.getEmployee(id);
+    }*/
+
+    /*@DeleteMapping("/{id}")
+    void deleteEmployee(@PathVariable Long id) {
+        employeeService.delete(id);
+    }*/
+
+    
+    /*
+     *
+     * Be careful when using GetMapping and PathVariable together
+     * if you do GetMapping("/{id}") and (@PathVariable Long id) ----- id name must be the same in both (This is acceptable but bad practice)
+     * GetMapping("/{id}") and (@PathVariable Long employeeId) ----- This is WRONG
+     * GetMapping("/{id}") and (@PathVariable("id") Long employeeId) ----- This is correct and better practice. "employeeId" can be any name in this case
+     * 
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity<EmployeeDto> getEmployee(@PathVariable("id") Long employeeId){
+        EmployeeDto savedEmployee = employeeService.getEmployeeById(employeeId);
+        return new ResponseEntity<>(savedEmployee, HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<EmployeeDto>> getAllEmployees() {
+        List<EmployeeDto> employees = employeeService.getAllEmployees();
+        return new ResponseEntity<>(employees, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    void deleteEmployee(@PathVariable Long id) {
-        employeeService.delete(id);
+    public ResponseEntity<Void> deleteEmployeeById(@PathVariable("id") Long employeeId){
+        employeeService.deleteEmployeeById(employeeId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
 
 }
