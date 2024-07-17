@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ems.employeesystem.dto.EmployeeDto;
-import com.ems.employeesystem.entity.Employee;
 import com.ems.employeesystem.service.EmployeeService;
 
 import lombok.AllArgsConstructor;
@@ -70,9 +70,15 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteEmployeeById(@PathVariable("id") Long employeeId){
+    public ResponseEntity<Void> deleteEmployee(@PathVariable("id") Long employeeId){
         employeeService.deleteEmployeeById(employeeId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<EmployeeDto> updateEmployee(@RequestBody EmployeeDto employeeDto, @PathVariable("id") Long employeeId){
+        EmployeeDto updatedEmployee = employeeService.updateEmployee(employeeDto, employeeId);
+        return new ResponseEntity<>(updatedEmployee, HttpStatus.OK);
     }
 
 }
