@@ -15,7 +15,8 @@ const dummyData = [
     }
 ];
 
-const tableData = ({data}) =>{
+//Custom Components need to be capitalized to be recognized by React
+const TableData = ({data}) => {
     return (
             <tbody> 
                 {
@@ -32,11 +33,13 @@ const tableData = ({data}) =>{
     )
 };
 
-const tableFormat = ({data}) => {
-    
-        <div>
-            <h2>List of Employees</h2>
-                <table>
+
+//Custom Components need to be capitalized to be recognized by React
+const TableFormat = ({data}) => {
+    return (
+        <div className='container'>
+            <h2 className='text-center'>List of Employees</h2>
+                <table className='table table-striped table-bordered'>
                     <thead>
                         <tr>
                             <th>Employee ID</th>
@@ -45,20 +48,17 @@ const tableFormat = ({data}) => {
                             <th>Employee Email</th>
                         </tr>
                     </thead>
-                    <tableData data={dummyData}/>
+                    <TableData data={data}/>
                 </table>
-        </div>
-    
-
+        </div>  
+    )
 };
 
 const ListEmployeeComponent = () => {
-
-  return (
-    <div>
-        <tableFormat data = {dummyData}/>
-    </div>
-  )
+    return  (
+        <TableFormat data = {dummyData}/>
+    )
 };
+
 
 export default ListEmployeeComponent
