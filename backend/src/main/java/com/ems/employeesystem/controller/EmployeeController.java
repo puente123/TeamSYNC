@@ -17,6 +17,7 @@ import com.ems.employeesystem.service.EmployeeService;
 
 import lombok.AllArgsConstructor;
 
+@CrossOrigin("*")
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/employees")

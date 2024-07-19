@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { getEmployees } from '../services/EmployeeService';
 
 const dummyData = [
     {
@@ -14,6 +15,24 @@ const dummyData = [
         "email": "juior@gmail.com"
     }
 ];
+
+
+    const [employees, setEmployees] = useState([]);
+
+    //useEffect(function, [])
+    useEffect(() => {
+        async function updateData() {
+            try{
+                const response = await getEmployees()
+                setEmployees(response.data)
+                
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        updateData();
+    }, []);
+
 
 //Custom Components need to be capitalized to be recognized by React
 const TableData = ({data}) => {
@@ -56,7 +75,7 @@ const TableFormat = ({data}) => {
 
 const ListEmployeeComponent = () => {
     return  (
-        <TableFormat data = {dummyData}/>
+        <TableFormat data = {employees}/>
     )
 };
 
