@@ -3,10 +3,6 @@ package com.ems.employeesystem;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-<<<<<<< HEAD
-=======
-
->>>>>>> master
 /**
  * Main class for the Employee Management System application.
  * 
