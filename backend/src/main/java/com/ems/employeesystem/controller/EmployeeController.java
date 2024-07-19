@@ -1,5 +1,10 @@
 package com.ems.employeesystem.controller;
 
+<<<<<<< HEAD
+=======
+
+import org.springframework.web.bind.annotation.CrossOrigin;
+>>>>>>> master
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
