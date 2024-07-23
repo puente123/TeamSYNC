@@ -6,6 +6,10 @@ const getEmployees = () => {
    return axios.get(EMPLOYEE_API_BASE_URL)
 };
 
+const postEmployee = () => {
+    
+}
+
 
 export {
     getEmployees
