@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { getEmployees } from '../services/EmployeeService';
+import { useNavigate } from 'react-router-dom';
 
 const dummyData = [
     {
@@ -34,10 +35,11 @@ const TableData = ({ data }) => {
     );
 };
 
-const TableFormat = ({ data }) => {
+const TableFormat = ({ data, onAddEmployeeClick }) => {
     return (
         <div className='container'>
             <h2 className='text-center'>List of Employees</h2>
+            <button onClick={onAddEmployeeClick} type="button" className="btn btn-primary">Add Employee</button>
             <table className='table table-striped table-bordered'>
                 <thead>
                     <tr>
@@ -56,6 +58,8 @@ const TableFormat = ({ data }) => {
 const ListEmployeeComponent = () => {
     const [employees, setEmployees] = useState([]);
 
+    const navigate = useNavigate();
+
     useEffect(() => {
         const fetchEmployees = async () => {
             try {
@@ -68,7 +72,12 @@ const ListEmployeeComponent = () => {
         fetchEmployees();
     }, []);
 
-    return <TableFormat data={employees} />;
+    const handleAddEmployeeClick = () => {
+        console.log ('Add Employee Button Clicked')
+        navigate("/add-employee")
+    }
+
+    return <TableFormat data={employees} onAddEmployeeClick={handleAddEmployeeClick}/>;
 };
 
 export default ListEmployeeComponent;
