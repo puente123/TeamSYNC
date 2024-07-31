@@ -34,6 +34,17 @@ public class EmployeeController {
         EmployeeDto savedEmployee = employeeService.createEmployee(employeeDto);
         return new ResponseEntity<>(savedEmployee, HttpStatus.CREATED);
     }
+    /*@PostMapping
+    public ResponseEntity<EmployeeDto> createEmployee(@RequestBody EmployeeDto employeeDto) {
+        try {
+            EmployeeDto savedEmployee = employeeService.createEmployee(employeeDto);
+            return new ResponseEntity<>(savedEmployee, HttpStatus.CREATED);
+        } catch (Exception e) {
+            // Log the exception (you can use a logging framework like SLF4J)
+            System.err.println("Error occurred while creating employee: " + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }*/
  
     /*
      *
