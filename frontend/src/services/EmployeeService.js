@@ -11,8 +11,17 @@ const postEmployee = (employee) => {
     return axios.post(EMPLOYEE_API_BASE_URL, employee)
 }
 
+const deleteEmployee = (employeeId) => {
+    return axios.delete(EMPLOYEE_API_BASE_URL, {
+        params: {
+            id: employeeId
+        }
+    })
+}
+
 
 export {
     getEmployees,
-    postEmployee
+    postEmployee,
+    deleteEmployee
 }
