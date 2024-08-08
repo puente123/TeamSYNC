@@ -20,7 +20,7 @@ const dummyData = [
 //Custom Components need to be capitalized to be recognized by React
 const TableData = ({ data, onUpdateEmployeeClick, onDeleteEmployeeClick }) => {
   return (
-    <tbody>
+    <tbody className="white-text">
       {data.map((employee) => (
         <tr key={employee.id}>
           <td>{employee.id}</td>
@@ -66,20 +66,21 @@ const TableFormat = ({
       >
         Add Employee
       </button>
-      <table className="table table-striped table-bordered">
+      <table className="table /* table-striped table-bordered */">
         <thead>
           <tr>
-            <th>Employee ID</th>
-            <th>Employee First Name</th>
-            <th>Employee Last Name</th>
-            <th>Employee Email</th>
-            <th>Actions</th>
+            <th><h1>Employee ID</h1></th>
+            <th><h1>Employee First Name</h1></th>
+            <th><h1>Employee Last Name</h1></th>
+            <th><h1>Employee Emai</h1>l</th>
+            <th><h1>Actions</h1></th>
           </tr>
         </thead>
         <TableData
           data={data}
           onDeleteEmployeeClick={onDeleteEmployeeClick}
           onUpdateEmployeeClick={onUpdateEmployeeClick}
+          className="white-text"
         />
       </table>
     </div>
