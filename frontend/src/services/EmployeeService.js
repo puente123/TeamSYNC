@@ -16,11 +16,11 @@ const postEmployee = (employee) => {
 }
 
 const deleteEmployee = (employeeId) => {
-    return axios.delete(EMPLOYEE_API_BASE_URL, {
-        params: {
-            id: employeeId
-        }
-    })
+    return axios.delete(EMPLOYEE_API_BASE_URL + "/" + employeeId)
+}
+
+const updateEmployee = (employeeData, employeeId) => {
+    return axios.put(EMPLOYEE_API_BASE_URL + "/" + employeeId, employeeData)
 }
 
 
@@ -28,5 +28,6 @@ export {
     getEmployees,
     getEmployee,
     postEmployee,
-    deleteEmployee
+    deleteEmployee,
+    updateEmployee
 }

@@ -1,6 +1,10 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { postEmployee, getEmployee } from "../services/EmployeeService";
+import {
+  postEmployee,
+  getEmployee,
+  updateEmployee,
+} from "../services/EmployeeService";
 import { useNavigate, useParams } from "react-router-dom";
 
 const EmployeeComponent = () => {
@@ -25,13 +29,12 @@ const EmployeeComponent = () => {
           setFirstName(response.data.firstName);
           setLastName(response.data.lastName);
           setEmail(response.data.email);
-        } 
-        catch (error) {
+        } catch (error) {
           console.error("Failed to get employee data");
         }
       };
 
-      fetchEmployee()
+      fetchEmployee();
     }
   }, [id]);
 
@@ -97,6 +100,7 @@ const EmployeeComponent = () => {
     //const navigate = useNavigate();
 
     if (verifyInputs()) {
+        
       const employeeData = {
         firstName: firstName,
         lastName: lastName,
@@ -108,13 +112,22 @@ const EmployeeComponent = () => {
                 method: "POST",
                 body: JSON.stringify(employeeData)
             } */
-
-      try {
-        const response = await postEmployee(employeeData);
-        console.log(response.status);
-        navigate("/");
-      } catch (error) {
-        console.log(error);
+      if (id) {
+        try {
+          const response = await updateEmployee(employeeData, id);
+          console.log(response.status);
+          navigate("/");
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        try {
+          const response = await postEmployee(employeeData);
+          console.log(response.status);
+          navigate("/");
+        } catch (error) {
+          console.log(error);
+        }
       }
     }
   };

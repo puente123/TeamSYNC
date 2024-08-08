@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getEmployees } from "../services/EmployeeService";
+import { getEmployees, deleteEmployee } from "../services/EmployeeService";
 import { useNavigate } from "react-router-dom";
 
 const dummyData = [
@@ -82,23 +82,41 @@ const ListEmployeeComponent = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchEmployees = async () => {
-      try {
-        const response = await getEmployees();
-        setEmployees(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+    
     fetchEmployees();
   }, []);
+
+  const fetchEmployees = async () => {
+    try {
+      const response = await getEmployees();
+      setEmployees(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const handleAddEmployeeClick = () => {
     console.log("Add Employee Button Clicked");
     navigate("/add-employee");
   };
 
-  const handleDeleteEmployee = (id) => {};
+  const handleDeleteEmployee = (id) => {
+    console.log("Delete Employee Button Clicked")
+
+    const deleteEmployees = async () => {
+
+        try{
+            const response = await deleteEmployee(id)
+            console.log(response.status)
+            fetchEmployees();
+            navigate("/")
+        }catch(error){
+            console.log(error)
+        }
+    }
+
+    deleteEmployees()
+  };
 
   const handleUpdateEmployee = (id) => {
     console.log("Update Employee Button Clicked");
