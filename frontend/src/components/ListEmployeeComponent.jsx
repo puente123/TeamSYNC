@@ -50,12 +50,7 @@ const TableData = ({ data, onUpdateEmployeeClick, onDeleteEmployeeClick }) => {
   );
 };
 
-const TableFormat = ({
-  data,
-  onAddEmployeeClick,
-  onDeleteEmployeeClick,
-  onUpdateEmployeeClick,
-}) => {
+const TableFormat = ({ data, onAddEmployeeClick, onDeleteEmployeeClick, onUpdateEmployeeClick }) => {
   return (
     <div className="container">
       <h2 className="text-center">List of Employees</h2>
@@ -76,12 +71,7 @@ const TableFormat = ({
             <th><h1>Actions</h1></th>
           </tr>
         </thead>
-        <TableData
-          data={data}
-          onDeleteEmployeeClick={onDeleteEmployeeClick}
-          onUpdateEmployeeClick={onUpdateEmployeeClick}
-          className="white-text"
-        />
+        <TableData data={data} onDeleteEmployeeClick={onDeleteEmployeeClick} onUpdateEmployeeClick={onUpdateEmployeeClick}/>
       </table>
     </div>
   );
@@ -92,6 +82,7 @@ const ListEmployeeComponent = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    
     fetchEmployees();
   }, []);
 
@@ -110,20 +101,21 @@ const ListEmployeeComponent = () => {
   };
 
   const handleDeleteEmployee = (id) => {
-    console.log("Delete Employee Button Clicked");
+    console.log("Delete Employee Button Clicked")
 
     const deleteEmployees = async () => {
-      try {
-        const response = await deleteEmployee(id);
-        console.log(response.status);
-        fetchEmployees();
-        navigate("/");
-      } catch (error) {
-        console.log(error);
-      }
-    };
 
-    deleteEmployees();
+        try{
+            const response = await deleteEmployee(id)
+            console.log(response.status)
+            fetchEmployees();
+            navigate("/")
+        }catch(error){
+            console.log(error)
+        }
+    }
+
+    deleteEmployees()
   };
 
   const handleUpdateEmployee = (id) => {

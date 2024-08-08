@@ -73,3 +73,4 @@ public class Employee {
     @Column(name = "email_id", nullable = false, unique = true)
     private String email;
 }
+

@@ -100,6 +100,7 @@ const EmployeeComponent = () => {
     //const navigate = useNavigate();
 
     if (verifyInputs()) {
+        
       const employeeData = {
         firstName: firstName,
         lastName: lastName,

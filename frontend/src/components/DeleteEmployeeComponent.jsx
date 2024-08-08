@@ -1,5 +1,8 @@
-import React from "react";
+import React from 'react'
 
-const DeleteEmployeeComponent = (employee) => {};
 
-export default DeleteEmployeeComponent;
+const DeleteEmployeeComponent = (employee) => {
+    
+};
+
+export default DeleteEmployeeComponent
