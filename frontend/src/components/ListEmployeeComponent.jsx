@@ -29,6 +29,14 @@ const TableData = ({ data }) => {
           <td>{employee.email}</td>
           <td>
             <button
+              onClick={() => onUpdateEmployeeClick(employee.id)}
+              type="button"
+              className="btn btn-primary mr-1"
+            >
+              Update
+            </button>
+
+            <button
               onClick={() => onDeleteEmployeeClick(employee.id)}
               type="button"
               className="btn btn-danger"
@@ -70,7 +78,6 @@ const TableFormat = ({ data, onAddEmployeeClick, onDeleteEmployeeClick }) => {
 };
 
 const ListEmployeeComponent = () => {
-
   const [employees, setEmployees] = useState([]);
   const navigate = useNavigate();
 
@@ -91,15 +98,13 @@ const ListEmployeeComponent = () => {
     navigate("/add-employee");
   };
 
-  const handleDeleteEmployee = (id) => {
-    
-  }
+  const handleDeleteEmployee = (id) => {};
 
   return (
-    <TableFormat 
-        data={employees} 
-        onAddEmployeeClick={handleAddEmployeeClick}
-        onDeleteEmployeeClick={handleDeleteEmployee}
+    <TableFormat
+      data={employees}
+      onAddEmployeeClick={handleAddEmployeeClick}
+      onDeleteEmployeeClick={handleDeleteEmployee}
     />
   );
 };

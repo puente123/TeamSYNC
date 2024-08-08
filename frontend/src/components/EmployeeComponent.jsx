@@ -10,6 +10,12 @@ const EmployeeComponent = () => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
 
+  const [errors, setErrors] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+  });
+
   /*
    * "event" is provided by the "onChange" event handler
    * We can access different elements using the event handler
@@ -31,27 +37,66 @@ const EmployeeComponent = () => {
     }
   };
 
+  function verifyInputs() {
+    let valid = true;
+
+    //... is known as the spread operator, {} is known as an object literal
+    //CopyErrors creates an shallow copy of errors
+    // Upkeeping immutability
+    const copyErrors = { ...errors }
+
+    //Verify first name text field is not blank
+    if (firstName.trim() == "") {
+      valid = false;
+      copyErrors.firstName = "First Name is Required";
+    } else {
+      copyErrors.firstName = "";
+    }
+
+    //Verify last name text field is not blank
+    if (lastName.trim() == "") {
+      valid = false;
+      copyErrors.lastName = "Last Name is Required";
+    } else {
+      copyErrors.lastName = "";
+    }
+
+    //Verify email name text field is not blank
+    if (email.trim() == "") {
+      valid = false;
+      copyErrors.email = "Email is Required";
+    } else {
+      copyErrors.email = "";
+    }
+
+    //Update any errors that where found
+    setErrors(copyErrors);
+    return valid;
+  }
+
   const onConfirmClick = async () => {
     //const navigate = useNavigate();
 
-    const employeeData = {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-    };
+    if (verifyInputs()) {
+      const employeeData = {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+      };
 
-    //I didnt use this because the POST method was already defined in the postEmployee function in EmployeeService
-    /*const employee = {
-            method: "POST",
-            body: JSON.stringify(employeeData)
-        } */
+      //I didnt use this because the POST method was already defined in the postEmployee function in EmployeeService
+      /*const employee = {
+                method: "POST",
+                body: JSON.stringify(employeeData)
+            } */
 
-    try {
-      const response = await postEmployee(employeeData);
-      console.log(response.status);
-      navigate("/");
-    } catch (error) {
-      console.log(error);
+      try {
+        const response = await postEmployee(employeeData);
+        console.log(response.status);
+        navigate("/");
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -117,6 +162,7 @@ const EmployeeComponent = () => {
           value={firstName}
           onChange={handleChange}
         />
+        {errors.firstName && <span style={{ color: 'red' }}>{errors.firstName}</span>}
       </div>
       <div className="form-group">
         <label htmlFor="lastNameInput">Employee Last Name:</label>
@@ -127,6 +173,7 @@ const EmployeeComponent = () => {
           value={lastName}
           onChange={handleChange}
         />
+        {errors.lastName && <span style={{ color: 'red' }}>{errors.lastName}</span>}
       </div>
       <div className="form-group">
         <label htmlFor="emailInput">Employee Email:</label>
@@ -137,6 +184,7 @@ const EmployeeComponent = () => {
           value={email}
           onChange={handleChange}
         />
+        {errors.email && <span style={{ color: 'red' }}>{errors.email}</span>}
       </div>
       <button
         onClick={onConfirmClick}
