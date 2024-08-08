@@ -1,10 +1,11 @@
 import React from "react";
 import { useState } from "react";
 import { postEmployee } from "../services/EmployeeService";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const EmployeeComponent = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -43,7 +44,7 @@ const EmployeeComponent = () => {
     //... is known as the spread operator, {} is known as an object literal
     //CopyErrors creates an shallow copy of errors
     // Upkeeping immutability
-    const copyErrors = { ...errors }
+    const copyErrors = { ...errors };
 
     //Verify first name text field is not blank
     if (firstName.trim() == "") {
@@ -150,9 +151,23 @@ const EmployeeComponent = () => {
       </button>
     </div>
   );*/
+
+
+  function tableTitle(){
+    if(id){
+        return <h1 className="mb-4">Updating Employee</h1>
+    }
+    else{
+        return <h1 className="mb-4">Creating New Employee</h1>
+    }
+  }
+
+
   return (
     <div className="container mt-5">
-      <h1 className="mb-4">Inserting New Employee</h1>
+      {
+        tableTitle()
+      }
       <div className="form-group">
         <label htmlFor="firstNameInput">Employee First Name:</label>
         <input
@@ -162,7 +177,9 @@ const EmployeeComponent = () => {
           value={firstName}
           onChange={handleChange}
         />
-        {errors.firstName && <span style={{ color: 'red' }}>{errors.firstName}</span>}
+        {errors.firstName && (
+          <span style={{ color: "red" }}>{errors.firstName}</span>
+        )}
       </div>
       <div className="form-group">
         <label htmlFor="lastNameInput">Employee Last Name:</label>
@@ -173,7 +190,9 @@ const EmployeeComponent = () => {
           value={lastName}
           onChange={handleChange}
         />
-        {errors.lastName && <span style={{ color: 'red' }}>{errors.lastName}</span>}
+        {errors.lastName && (
+          <span style={{ color: "red" }}>{errors.lastName}</span>
+        )}
       </div>
       <div className="form-group">
         <label htmlFor="emailInput">Employee Email:</label>
@@ -184,7 +203,7 @@ const EmployeeComponent = () => {
           value={email}
           onChange={handleChange}
         />
-        {errors.email && <span style={{ color: 'red' }}>{errors.email}</span>}
+        {errors.email && <span style={{ color: "red" }}>{errors.email}</span>}
       </div>
       <button
         onClick={onConfirmClick}

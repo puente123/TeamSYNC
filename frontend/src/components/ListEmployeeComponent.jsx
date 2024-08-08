@@ -18,7 +18,7 @@ const dummyData = [
 ];
 
 //Custom Components need to be capitalized to be recognized by React
-const TableData = ({ data }) => {
+const TableData = ({ data, onUpdateEmployeeClick, onDeleteEmployeeClick }) => {
   return (
     <tbody>
       {data.map((employee) => (
@@ -50,7 +50,7 @@ const TableData = ({ data }) => {
   );
 };
 
-const TableFormat = ({ data, onAddEmployeeClick, onDeleteEmployeeClick }) => {
+const TableFormat = ({ data, onAddEmployeeClick, onDeleteEmployeeClick, onUpdateEmployeeClick }) => {
   return (
     <div className="container">
       <h2 className="text-center">List of Employees</h2>
@@ -71,7 +71,7 @@ const TableFormat = ({ data, onAddEmployeeClick, onDeleteEmployeeClick }) => {
             <th>Actions</th>
           </tr>
         </thead>
-        <TableData data={data} onDeleteEmployeeClick={onDeleteEmployeeClick} />
+        <TableData data={data} onDeleteEmployeeClick={onDeleteEmployeeClick} onUpdateEmployeeClick={onUpdateEmployeeClick}/>
       </table>
     </div>
   );
@@ -100,11 +100,17 @@ const ListEmployeeComponent = () => {
 
   const handleDeleteEmployee = (id) => {};
 
+  const handleUpdateEmployee = (id) => {
+    console.log("Update Employee Button Clicked");
+    navigate(`/edit-employee/${id}`);
+  };
+
   return (
     <TableFormat
       data={employees}
       onAddEmployeeClick={handleAddEmployeeClick}
       onDeleteEmployeeClick={handleDeleteEmployee}
+      onUpdateEmployeeClick={handleUpdateEmployee}
     />
   );
 };
