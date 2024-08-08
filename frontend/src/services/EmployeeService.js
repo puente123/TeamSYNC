@@ -7,6 +7,10 @@ const getEmployees = () => {
    return axios.get(EMPLOYEE_API_BASE_URL)
 };
 
+const getEmployee = (employeeId) => {
+    return axios.get(EMPLOYEE_API_BASE_URL + "/" + employeeId)
+ };
+
 const postEmployee = (employee) => {
     return axios.post(EMPLOYEE_API_BASE_URL, employee)
 }
@@ -22,6 +26,7 @@ const deleteEmployee = (employeeId) => {
 
 export {
     getEmployees,
+    getEmployee,
     postEmployee,
     deleteEmployee
 }

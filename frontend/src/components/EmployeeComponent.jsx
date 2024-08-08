@@ -1,6 +1,6 @@
 import React from "react";
-import { useState } from "react";
-import { postEmployee } from "../services/EmployeeService";
+import { useState, useEffect } from "react";
+import { postEmployee, getEmployee } from "../services/EmployeeService";
 import { useNavigate, useParams } from "react-router-dom";
 
 const EmployeeComponent = () => {
@@ -16,6 +16,24 @@ const EmployeeComponent = () => {
     lastName: "",
     email: "",
   });
+
+  useEffect(() => {
+    if (id) {
+      const fetchEmployee = async () => {
+        try {
+          const response = await getEmployee(id);
+          setFirstName(response.data.firstName);
+          setLastName(response.data.lastName);
+          setEmail(response.data.email);
+        } 
+        catch (error) {
+          console.error("Failed to get employee data");
+        }
+      };
+
+      fetchEmployee()
+    }
+  }, [id]);
 
   /*
    * "event" is provided by the "onChange" event handler
@@ -152,28 +170,24 @@ const EmployeeComponent = () => {
     </div>
   );*/
 
-
-  function tableTitle(){
-    if(id){
-        return <h1 className="mb-4">Updating Employee</h1>
-    }
-    else{
-        return <h1 className="mb-4">Creating New Employee</h1>
+  function tableTitle() {
+    if (id) {
+      return <h1 className="mb-4">Updating Employee</h1>;
+    } else {
+      return <h1 className="mb-4">Creating New Employee</h1>;
     }
   }
 
-
   return (
     <div className="container mt-5">
-      {
-        tableTitle()
-      }
+      {tableTitle()}
       <div className="form-group">
         <label htmlFor="firstNameInput">Employee First Name:</label>
         <input
           id="firstNameInput"
           name="firstNameInput"
           className="form-control"
+          placeholder="Enter Employee's First Name"
           value={firstName}
           onChange={handleChange}
         />
@@ -187,6 +201,7 @@ const EmployeeComponent = () => {
           id="lastNameInput"
           name="lastNameInput"
           className="form-control"
+          placeholder="Enter Employee's Last Name"
           value={lastName}
           onChange={handleChange}
         />
@@ -200,6 +215,7 @@ const EmployeeComponent = () => {
           id="emailInput"
           name="emailInput"
           className="form-control"
+          placeholder="Enter Employee's Email"
           value={email}
           onChange={handleChange}
         />
