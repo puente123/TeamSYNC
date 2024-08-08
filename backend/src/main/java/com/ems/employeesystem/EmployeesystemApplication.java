@@ -24,7 +24,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class EmployeesystemApplication {
 
     /**
-     * The main method which serves as the entry point for the Spring Boot application.
+     * The main method which serves as the entry point for the Spring Boot
+     * application.
      * 
      * @param args command-line arguments passed to the application
      */

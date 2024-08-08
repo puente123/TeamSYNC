@@ -26,36 +26,42 @@ public class EmployeeController {
 
     private EmployeeService employeeService;
 
-    //Build Add Employee REST API
-    //Create Method
-    //Annotate it with Spring Boot
+    // Build Add Employee REST API
+    // Create Method
+    // Annotate it with Spring Boot
     @PostMapping
-    public ResponseEntity<EmployeeDto> createEmployee(@RequestBody EmployeeDto employeeDto){
+    public ResponseEntity<EmployeeDto> createEmployee(@RequestBody EmployeeDto employeeDto) {
         EmployeeDto savedEmployee = employeeService.createEmployee(employeeDto);
         return new ResponseEntity<>(savedEmployee, HttpStatus.CREATED);
     }
-    /*@PostMapping
-    public ResponseEntity<EmployeeDto> createEmployee(@RequestBody EmployeeDto employeeDto) {
-        try {
-            EmployeeDto savedEmployee = employeeService.createEmployee(employeeDto);
-            return new ResponseEntity<>(savedEmployee, HttpStatus.CREATED);
-        } catch (Exception e) {
-            // Log the exception (you can use a logging framework like SLF4J)
-            System.err.println("Error occurred while creating employee: " + e.getMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }*/
- 
+    /*
+     * @PostMapping
+     * public ResponseEntity<EmployeeDto> createEmployee(@RequestBody EmployeeDto
+     * employeeDto) {
+     * try {
+     * EmployeeDto savedEmployee = employeeService.createEmployee(employeeDto);
+     * return new ResponseEntity<>(savedEmployee, HttpStatus.CREATED);
+     * } catch (Exception e) {
+     * // Log the exception (you can use a logging framework like SLF4J)
+     * System.err.println("Error occurred while creating employee: " +
+     * e.getMessage());
+     * return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+     * }
+     * }
+     */
+
     /*
      *
      * Be careful when using GetMapping and PathVariable together
-     * if you do GetMapping("/{id}") and (@PathVariable Long id) ----- id name must be the same in both (This is acceptable but bad practice)
+     * if you do GetMapping("/{id}") and (@PathVariable Long id) ----- id name must
+     * be the same in both (This is acceptable but bad practice)
      * GetMapping("/{id}") and (@PathVariable Long employeeId) ----- This is WRONG
-     * GetMapping("/{id}") and (@PathVariable("id") Long employeeId) ----- This is correct and better practice. "employeeId" can be any name in this case
+     * GetMapping("/{id}") and (@PathVariable("id") Long employeeId) ----- This is
+     * correct and better practice. "employeeId" can be any name in this case
      * 
      */
     @GetMapping("/{id}")
-    public ResponseEntity<EmployeeDto> getEmployee(@PathVariable("id") Long employeeId){
+    public ResponseEntity<EmployeeDto> getEmployee(@PathVariable("id") Long employeeId) {
         EmployeeDto savedEmployee = employeeService.getEmployeeById(employeeId);
         return new ResponseEntity<>(savedEmployee, HttpStatus.OK);
     }
@@ -67,13 +73,14 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteEmployee(@PathVariable("id") Long employeeId){
+    public ResponseEntity<String> deleteEmployee(@PathVariable("id") Long employeeId) {
         employeeService.deleteEmployeeById(employeeId);
         return new ResponseEntity<>("Employee Succesfully Deleted", HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<EmployeeDto> updateEmployee(@RequestBody EmployeeDto employeeDto, @PathVariable("id") Long employeeId){
+    public ResponseEntity<EmployeeDto> updateEmployee(@RequestBody EmployeeDto employeeDto,
+            @PathVariable("id") Long employeeId) {
         EmployeeDto updatedEmployee = employeeService.updateEmployee(employeeDto, employeeId);
         return new ResponseEntity<>(updatedEmployee, HttpStatus.OK);
     }

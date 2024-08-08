@@ -17,21 +17,19 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class EmployeeServiceImpl implements EmployeeService{
+public class EmployeeServiceImpl implements EmployeeService {
 
     private EmployeeRepository employeeRepository;
-
 
     @Override
     public EmployeeDto createEmployee(EmployeeDto employeeDto) {
 
         Employee employee = EmployeeMapper.mapToEmployee(employeeDto);
 
-        //Employee Repository was the class created to interact with the database
-        //It was set up to import the CRUD operations
+        // Employee Repository was the class created to interact with the database
+        // It was set up to import the CRUD operations
         Employee savedEmployee = employeeRepository.save(employee);
 
-        
         return EmployeeMapper.mapToEmployeeDto(savedEmployee);
     }
 
@@ -44,7 +42,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Override
     public Optional<Employee> getEmployee(Long id) {
-        
+
         return employeeRepository.findById(id);
     }
 
@@ -52,14 +50,15 @@ public class EmployeeServiceImpl implements EmployeeService{
     public void delete(Long id) {
 
         employeeRepository.deleteById(id);
-        
+
     }
 
     @Override
     public EmployeeDto getEmployeeById(Long employeeId) {
-        
+
         Employee employee = employeeRepository.findById(employeeId)
-                .orElseThrow(() -> new ResourceNotFoundException("Employee with this ID does NOT exist, ID: " + employeeId));
+                .orElseThrow(
+                        () -> new ResourceNotFoundException("Employee with this ID does NOT exist, ID: " + employeeId));
 
         return EmployeeMapper.mapToEmployeeDto(employee);
     }
@@ -69,12 +68,12 @@ public class EmployeeServiceImpl implements EmployeeService{
 
         boolean exists = employeeRepository.existsById(employeeId);
 
-        if(!exists){
-           throw new ResourceNotFoundException("Employee with this ID does NOT exist, ID: " + employeeId);
+        if (!exists) {
+            throw new ResourceNotFoundException("Employee with this ID does NOT exist, ID: " + employeeId);
         }
 
         employeeRepository.deleteById(employeeId);
-                
+
     }
 
     @Override
@@ -82,34 +81,35 @@ public class EmployeeServiceImpl implements EmployeeService{
 
         List<Employee> employees = employeeRepository.findAll();
         List<EmployeeDto> dtoEmployees = new ArrayList<>();
-        for (Employee e : employees){
+        for (Employee e : employees) {
             dtoEmployees.add(EmployeeMapper.mapToEmployeeDto(e));
         }
 
         return dtoEmployees;
-                
+
     }
 
     @Override
     public EmployeeDto updateEmployee(EmployeeDto employeeDto, Long employeeId) {
 
-        //Finds the employee we need to update in the database, and throws exception of we do not find it
-        Employee employeeOriginal = employeeRepository.findById(employeeId).orElseThrow(() -> new ResourceNotFoundException("Employee with this ID does NOT exist, ID: " + employeeId));
+        // Finds the employee we need to update in the database, and throws exception of
+        // we do not find it
+        Employee employeeOriginal = employeeRepository.findById(employeeId).orElseThrow(
+                () -> new ResourceNotFoundException("Employee with this ID does NOT exist, ID: " + employeeId));
 
         //
         Employee employeeUpdated = EmployeeMapper.mapToEmployee(employeeDto);
 
-        //Updates the information
+        // Updates the information
         employeeOriginal.setEmail(employeeUpdated.getEmail());
         employeeOriginal.setFirstName(employeeUpdated.getFirstName());
         employeeOriginal.setLastName(employeeUpdated.getLastName());
 
-        //Saves the updated information into the database,
-        //This is important (ALWAYS REMEMBER TO UPDATE THE DATABASE)
+        // Saves the updated information into the database,
+        // This is important (ALWAYS REMEMBER TO UPDATE THE DATABASE)
         employeeRepository.save(employeeOriginal);
 
         return EmployeeMapper.mapToEmployeeDto(employeeOriginal);
     }
 
-    
 }
